@@ -6,6 +6,8 @@ import {
 import CardEpisodio from "@/ui/components/cards/cardEpisodio";
 import { useState } from "react";
 
+import { ScrollArea } from "@/ui/shadcn/components/scroll-area";
+
 type Props = {
   temporada: string;
   episodios: any[];
@@ -31,17 +33,19 @@ export default function DropdownEpisodes({ temporada, episodios }: Props) {
         </span>
       </CollapsibleTrigger>
 
-      <CollapsibleContent
-        className="px-6 pb-6 pt-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-      >
-        {episodios.map((episodio: any) => (
-          <CardEpisodio
-            key={episodio.id}
-            name={episodio.name}
-            episode={episodio.episode}
-            air_date={episodio.air_date}
-          />
-        ))}
+      <CollapsibleContent>
+        <ScrollArea className="max-h-[400px] overflow-y-auto px-6 pb-6 pt-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {episodios.map((episodio: any) => (
+              <CardEpisodio
+                key={episodio.id}
+                name={episodio.name}
+                episode={episodio.episode}
+                air_date={episodio.air_date}
+              />
+            ))}
+          </div>
+        </ScrollArea>
       </CollapsibleContent>
     </Collapsible>
   );
