@@ -1,7 +1,7 @@
 "use client";
 
 import { useListEpisodios } from "@/lib/api/hooks/useEpisodios";
-import CardPersonagem from "@/ui/components/cards/cardPersonagem";
+import CardEpisodio from "@/ui/components/cards/cardEpisodio";
 
 export default function Page() {
   const { data, isLoading, isError } = useListEpisodios(1);
@@ -17,7 +17,7 @@ export default function Page() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
         {data.results.map((personagem: any) => (
-          <CardPersonagem key={personagem.id} />
+          <CardEpisodio key={personagem.id} name={personagem.name} episode={personagem.episode} air_date={personagem.air_date} />
         ))}
       </div>
     </div>
