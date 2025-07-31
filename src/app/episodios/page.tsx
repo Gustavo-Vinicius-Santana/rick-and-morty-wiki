@@ -1,7 +1,7 @@
 "use client";
 
 import { useListAllEpisodios } from "@/lib/api/hooks/useEpisodios";
-import CardEpisodio from "@/ui/components/cards/cardEpisodio";
+import DropdownEpisodes from "@/ui/components/dropdown/dropdownEpisodes";
 
 export default function Page() {
   const { data, isLoading, isError } = useListAllEpisodios();
@@ -34,24 +34,15 @@ export default function Page() {
         Episódios
       </h1>
 
-      {temporadasOrdenadas.map(([temporada, episodios]) => (
-        <div key={temporada} className="mb-12">
-          <h2 className="text-2xl font-semibold mb-6 text-gray-700">
-            Temporada {temporada.replace("S", "")}
-          </h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
-            {episodios.map((episodio: any) => (
-              <CardEpisodio
-                key={episodio.id}
-                name={episodio.name}
-                episode={episodio.episode}
-                air_date={episodio.air_date}
-              />
-            ))}
-          </div>
-        </div>
-      ))}
+      <div className="space-y-8">
+        {temporadasOrdenadas.map(([temporada, episodios]) => (
+          <DropdownEpisodes
+            key={temporada}
+            temporada={temporada}
+            episodios={episodios}
+          />
+        ))}
+      </div>
     </div>
   );
 }
