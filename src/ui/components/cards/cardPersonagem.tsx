@@ -2,22 +2,26 @@
 
 import Image from "next/image";
 
-export default function CardPersonagem() {
+type props = {
+  image: string;
+  name: string;
+}
+
+export default function CardPersonagem({ image, name }: props) {
   return (
     <div className="w-64 bg-white rounded-xl shadow-lg overflow-hidden">
       {/* Seção da imagem */}
       <div className="w-full h-64 relative">
-        <Image
-          src="/serie.jpeg"
+        <img
+          src={image}
           alt="Personagem"
-          layout="fill"
-          objectFit="cover"
+          className="w-full h-64 object-cover"
         />
       </div>
 
       {/* Seção do nome */}
       <div className="p-4 text-center">
-        <h2 className="text-lg font-semibold text-gray-800">Nome do Personagem</h2>
+        <h2 className="text-lg font-semibold text-gray-800">{name}</h2>
       </div>
     </div>
   );

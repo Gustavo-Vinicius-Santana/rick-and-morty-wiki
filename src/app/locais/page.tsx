@@ -1,6 +1,6 @@
 "use client";
 import { useListLocais } from "@/lib/api/hooks/useLocais";
-import CardPersonagem from "@/ui/components/cards/cardPersonagem";
+import CardLocal from "@/ui/components/cards/cardLocal";
 
 export default function page(){
     const {data, isLoading, isError} = useListLocais(1);
@@ -17,7 +17,7 @@ export default function page(){
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
                 {data.results.map((personagem: any) => (
-                <CardPersonagem key={personagem.id} />
+                <CardLocal key={personagem.id} name={personagem.name} type={personagem.type} dimension={personagem.dimension} />
                 ))}
             </div>
         </div>
