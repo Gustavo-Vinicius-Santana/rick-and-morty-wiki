@@ -17,10 +17,10 @@ export default function Header() {
           <Link href="/personagens" className="hover:text-green-400 transition">
             Personagens
           </Link>
-          <Link href="/locais" className="hover:text-green-400 transition">
+          <Link href="/episodios" className="hover:text-green-400 transition">
             Episódios
           </Link>
-          <Link href="/episodios" className="hover:text-green-400 transition">
+          <Link href="/locais" className="hover:text-green-400 transition">
             Locais
           </Link>
         </nav>
