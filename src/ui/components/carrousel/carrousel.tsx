@@ -10,28 +10,22 @@ import {
 
 import CardPersonagem from "../cards/cardPersonagem";
 
-export default function Carrousel() {
+type props = {
+    list: any
+}
+
+export default function Carrousel({list}: props) {
 
     return(
         <>
             <Carousel className="w-[75%] md:w-full">
                 <CarouselPrevious />
                 <CarouselContent>
-                    <CarouselItem className="md:basis-1/2 lg:basis-1/3 flex justify-center">
-                        <CardPersonagem />
-                    </CarouselItem>
-                    <CarouselItem className="md:basis-1/2 lg:basis-1/3 flex justify-center">
-                        <CardPersonagem />
-                    </CarouselItem>
-                    <CarouselItem className="md:basis-1/2 lg:basis-1/3 flex justify-center">
-                        <CardPersonagem />
-                    </CarouselItem>
-                    <CarouselItem className="md:basis-1/2 lg:basis-1/3 flex justify-center">
-                        <CardPersonagem />
-                    </CarouselItem>
-                    <CarouselItem className="md:basis-1/2 lg:basis-1/3 flex justify-center">
-                        <CardPersonagem />
-                    </CarouselItem>
+                    {list.map((personagem: any) => (
+                        <CarouselItem key={personagem.id} className="md:basis-1/2 lg:basis-1/3 flex justify-center">
+                            <CardPersonagem image={personagem.image} name={personagem.name} />
+                        </CarouselItem>
+                    ))}
                 </CarouselContent>
                 <CarouselNext />
             </Carousel>

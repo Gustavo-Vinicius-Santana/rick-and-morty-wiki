@@ -3,14 +3,23 @@
 import Carrousel from "@/ui/components/carrousel/carrousel";
 import Image from "next/image";
 
+import { useListPersonagemsPrincipais } from "@/lib/api/hooks/usePersonagens";
+
 export default function Home() {
+  const { data, isLoading, isError } = useListPersonagemsPrincipais();
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error</div>;
+
+  console.log(data);
+
   return (
     <main className="space-y-0">
       <section className="bg-gray-800 py-10">
         <div className="max-w-6xl mx-auto px-4 md:px-0 text-center">
           <h1 className="text-3xl font-bold text-white mb-6">Personagens Principais</h1>
           <div className="flex justify-center">
-            <Carrousel />
+            <Carrousel list={data} />
           </div>
         </div>
       </section>
