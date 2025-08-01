@@ -3,35 +3,59 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/ui/shadcn/components/dialog";
 
 import { useModalEpisodioStore } from "@/lib/stores/modalStore";
 import { useListEspecificEpisodio } from "@/lib/api/hooks/useEpisodios";
 
 export default function ModalEpisodio() {
-    const { isOpen, id,  onOpen, onClose } = useModalEpisodioStore();
-    const { data, isLoading, isError } = useListEspecificEpisodio(id);
+  const { isOpen, id, onClose } = useModalEpisodioStore();
 
-    if (isLoading) return <div className="text-center py-20">Carregando...</div>;
-    if (isError) return <div className="text-center text-red-500">Erro ao carregar episodio.</div>;
+  // Hook sempre chamado, mas com enabled no hook evita fetch sem id
+  const { data, isLoading, isError } = useListEspecificEpisodio(id);
 
-    console.log("id no modal de episodio", id);
-    console.log("episodio no modal:", data);
+  // Só renderiza modal se estiver aberto e com id válido
+  if (!isOpen || !id) return null;
 
-    return(
-        <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent>
-            <DialogHeader>
-            <DialogTitle>MODAL DE EPISODIO</DialogTitle>
-            <DialogDescription>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate nobis iste illum beatae exercitationem iure praesentium blanditiis ipsa qui? Eos sequi, tenetur dolor neque culpa amet modi dolore placeat vero.
-            </DialogDescription>
-            </DialogHeader>
-        </DialogContent>
-        </Dialog>
-    )
+  if (isLoading) return <div className="text-center py-20">Carregando...</div>;
+
+  if (isError || !data)
+    return (
+      <div className="text-center text-red-500">
+        Erro ao carregar episódio.
+      </div>
+    );
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-md">
+        <DialogHeader>
+          <DialogTitle className="text-xl font-bold">{data.name}</DialogTitle>
+        </DialogHeader>
+
+        <div className="mt-4 space-y-3 text-sm">
+          <p>
+            <strong>Data de exibição:</strong> {data.air_date}
+          </p>
+          <p>
+            <strong>Episódio:</strong> {data.episode}
+          </p>
+          <p>
+            <strong>Personagens:</strong>{" "}
+            {(data.characters as string[])
+              .slice(0, 5)
+              .map((charUrl, index) => (
+                <span key={charUrl}>
+                  {index > 0 && ", "}
+                  {`#${charUrl.split("/").pop()}`}
+                </span>
+              ))}
+            {data.characters.length > 5 && " ..."}
+          </p>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
 }
