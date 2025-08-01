@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getCharacters, getPrincipalCharacter, getCharacter } from '../services/personagemService';
+import { getCharacters, getPrincipalCharacter, getCharacter, getManyCharacters } from '../services/personagemService';
 
 export const useListPersonagens = (page: number) => {
     return useQuery({
@@ -20,5 +20,13 @@ export const useListEspecificPersonagem = (id: number | null) => {
     queryKey: ['personagem', id],
     queryFn: () => getCharacter(id!),
     enabled: id !== null,
+  });
+};
+
+export const useListManyPersonagens = (ids: number[]) => {
+  return useQuery({
+    queryKey: ['personagens', ids],
+    queryFn: () => getManyCharacters(ids),
+    enabled: ids.length > 0,
   });
 };
