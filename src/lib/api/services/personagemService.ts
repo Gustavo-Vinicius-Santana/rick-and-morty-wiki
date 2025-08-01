@@ -9,3 +9,8 @@ export async function getPrincipalCharacter() {
   const response = await API.get(`/character/1,2,3,4,5`);
   return response.data;
 }
+
+export async function getCharacter(id: number | null) {
+  const response = await API.get(`/character/${id}`);
+  return response.data;
+}

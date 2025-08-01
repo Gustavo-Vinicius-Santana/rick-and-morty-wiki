@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getEpisodes, getAllEpisodes } from "../services/episodiosService";
+import { getEpisodes, getAllEpisodes, getEpisode } from "../services/episodiosService";
 
 export const useListEpisodios = (page: number) => {
     return useQuery({
@@ -15,3 +15,11 @@ export const useListAllEpisodios = () => {
         staleTime: 1000 * 60 * 5
     }))
 }
+
+export const useListEspecificEpisodio = (id: number | null) => {
+    return useQuery({
+        queryKey: ['episodio', id],
+        queryFn: () => getEpisode(id!),
+        enabled: id !== null,
+    })
+};

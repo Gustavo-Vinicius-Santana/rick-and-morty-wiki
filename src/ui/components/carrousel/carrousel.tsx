@@ -23,7 +23,7 @@ export default function Carrousel({list}: props) {
                 <CarouselContent>
                     {list.map((personagem: any) => (
                         <CarouselItem key={personagem.id} className="md:basis-1/2 lg:basis-1/3 flex justify-center">
-                            <CardPersonagem image={personagem.image} name={personagem.name} />
+                            <CardPersonagem image={personagem.image} id={personagem.id} name={personagem.name} />
                         </CarouselItem>
                     ))}
                 </CarouselContent>

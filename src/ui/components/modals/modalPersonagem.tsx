@@ -6,15 +6,21 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/ui/shadcn/components/dialog";
 
 import { useModalPersonagemStore } from "@/lib/stores/modalStore";
+import { useListEspecificPersonagem } from "@/lib/api/hooks/usePersonagens";
 
 export default function ModalPersonagem() {
     const { isOpen, id, onOpen, onClose } = useModalPersonagemStore();
+    const { data, isLoading, isError } = useListEspecificPersonagem(id);
 
     console.log("id no modal de personagem", id);
+    
+    if (isLoading) return <div className="text-center py-20">Carregando...</div>;
+    if (isError) return <div className="text-center text-red-500">Erro ao carregar personagem.</div>;
+
+    console.log("personagem no modal:", data);
     
     return(
         <Dialog open={isOpen} onOpenChange={onClose}>
