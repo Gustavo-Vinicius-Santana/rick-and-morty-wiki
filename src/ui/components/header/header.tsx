@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Header() {
   return (
     <header className="bg-gray-900 text-white shadow-md">
-      <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between flex-col md:flex-row">
+      <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between flex-col md:flex-row gap-4 md:gap-0">
         <h1 className="text-2xl font-bold">
           <Link href="/">Rick and Morty Wiki</Link>
         </h1>
@@ -24,6 +24,14 @@ export default function Header() {
             Locais
           </Link>
         </nav>
+
+        <div className="w-full md:w-auto flex justify-center">
+          <Link href="/busca"
+            className="w-1/2 md:w-auto bg-white text-black px-4 py-2 rounded-md font-semibold hover:bg-gray-200 transition flex justify-center"
+          >
+            Buscar
+          </Link>
+        </div>
       </div>
     </header>
   );
