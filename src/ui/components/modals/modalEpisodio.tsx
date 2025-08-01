@@ -13,10 +13,8 @@ import { useListEspecificEpisodio } from "@/lib/api/hooks/useEpisodios";
 export default function ModalEpisodio() {
   const { isOpen, id, onClose } = useModalEpisodioStore();
 
-  // Hook sempre chamado, mas com enabled no hook evita fetch sem id
   const { data, isLoading, isError } = useListEspecificEpisodio(id);
 
-  // Só renderiza modal se estiver aberto e com id válido
   if (!isOpen || !id) return null;
 
   if (isLoading) return <div className="text-center py-20">Carregando...</div>;

@@ -13,10 +13,8 @@ import { useListEspecificLocal } from "@/lib/api/hooks/useLocais";
 export default function ModalLocal() {
   const { isOpen, id, onClose } = useModalLocalStore();
 
-  // ✅ Hook sempre chamado, mas não executa se `id` for nulo
   const { data, isLoading, isError } = useListEspecificLocal(id);
 
-  // ✅ Protege a renderização (mas não o hook)
   if (!isOpen || !id) return null;
 
   if (isLoading)
