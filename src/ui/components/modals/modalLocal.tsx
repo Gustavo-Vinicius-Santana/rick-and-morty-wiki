@@ -3,35 +3,60 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/ui/shadcn/components/dialog";
 
 import { useModalLocalStore } from "@/lib/stores/modalStore";
 import { useListEspecificLocal } from "@/lib/api/hooks/useLocais";
 
 export default function ModalLocal() {
-    const { isOpen, id, onOpen, onClose } = useModalLocalStore();
-    const { data, isLoading, isError } = useListEspecificLocal(id);
+  const { isOpen, id, onClose } = useModalLocalStore();
 
-    if (isLoading) return <div className="text-center py-20">Carregando...</div>;
-    if (isError) return <div className="text-center text-red-500">Erro ao carregar local.</div>;
+  // ✅ Hook sempre chamado, mas não executa se `id` for nulo
+  const { data, isLoading, isError } = useListEspecificLocal(id);
 
-    console.log("id no modal de local", id);
-    console.log("local no modal:", data);
-    
-    return(
-        <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent>
-            <DialogHeader>
-            <DialogTitle>MODAL DE LOCAL</DialogTitle>
-            <DialogDescription>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates doloribus quos animi nisi, voluptatum iure aliquam ipsam optio qui illo voluptatem quam. Expedita natus fugiat repellendus explicabo, nihil illo doloremque?
-            </DialogDescription>
-            </DialogHeader>
-        </DialogContent>
-        </Dialog>
-    )
+  // ✅ Protege a renderização (mas não o hook)
+  if (!isOpen || !id) return null;
+
+  if (isLoading)
+    return <div className="text-center py-20">Carregando...</div>;
+
+  if (isError || !data)
+    return (
+      <div className="text-center text-red-500">
+        Erro ao carregar local.
+      </div>
+    );
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-md">
+        <DialogHeader>
+          <DialogTitle className="text-xl font-bold">{data.name}</DialogTitle>
+        </DialogHeader>
+
+        <div className="mt-4 space-y-3 text-sm">
+          <p>
+            <strong>Tipo:</strong> {data.type || "Desconhecido"}
+          </p>
+          <p>
+            <strong>Dimensão:</strong> {data.dimension || "Desconhecida"}
+          </p>
+          <p>
+            <strong>Residentes:</strong>{" "}
+            {(data.residents as any[])
+              .slice(0, 5)
+              .map((residentUrl: string, index: number) => (
+                <span key={residentUrl}>
+                  {index > 0 && ", "}
+                  {`#${residentUrl.split("/").pop()}`}
+                </span>
+              ))}
+            {data.residents.length > 5 && " ..."}
+          </p>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
 }
