@@ -12,7 +12,9 @@ import {
 import { useModalEpisodioStore } from "@/lib/stores/modalStore";
 
 export default function ModalEpisodio() {
-    const { isOpen, onOpen, onClose } = useModalEpisodioStore();
+    const { isOpen, id,  onOpen, onClose } = useModalEpisodioStore();
+
+    console.log("id no modal de episodio", id);
 
     return(
         <Dialog open={isOpen} onOpenChange={onClose}>

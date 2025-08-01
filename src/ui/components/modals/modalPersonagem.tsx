@@ -12,7 +12,9 @@ import {
 import { useModalPersonagemStore } from "@/lib/stores/modalStore";
 
 export default function ModalPersonagem() {
-    const { isOpen, onOpen, onClose } = useModalPersonagemStore();
+    const { isOpen, id, onOpen, onClose } = useModalPersonagemStore();
+
+    console.log("id no modal de personagem", id);
     
     return(
         <Dialog open={isOpen} onOpenChange={onClose}>

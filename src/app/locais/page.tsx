@@ -25,6 +25,7 @@ export default function Page() {
           {data.results.map((personagem: any) => (
             <CardLocal
               key={personagem.id}
+              id={personagem.id}
               name={personagem.name}
               type={personagem.type}
               dimension={personagem.dimension}

@@ -12,7 +12,9 @@ import {
 import { useModalLocalStore } from "@/lib/stores/modalStore";
 
 export default function ModalLocal() {
-    const { isOpen, onOpen, onClose } = useModalLocalStore();
+    const { isOpen, id, onOpen, onClose } = useModalLocalStore();
+
+    console.log("id no modal de local", id);
     
     return(
         <Dialog open={isOpen} onOpenChange={onClose}>
