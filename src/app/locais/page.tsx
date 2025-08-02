@@ -1,16 +1,37 @@
 "use client";
+import { useState } from "react";
 import { useListLocais } from "@/lib/api/hooks/useLocais";
 import CardLocal from "@/ui/components/cards/cardLocal";
 import Paginacao from "@/ui/components/pagination/paginacao";
 import { ScrollArea } from "@/ui/shadcn/components/scroll-area";
-import { useState } from "react";
+
+interface Local {
+  id: number;
+  name: string;
+  type: string;
+  dimension: string;
+  // Se houver outros campos opcionais, adicione explicitamente aqui
+  // ex: residents?: string[];
+}
+
+interface Info {
+  pages: number;
+  next: boolean | null;
+  // adicione outros campos se necessário
+}
+
+interface DataLocais {
+  info: Info;
+  results: Local[];
+}
 
 export default function Page() {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState<number>(1);
   const { data, isLoading, isError } = useListLocais(page);
 
   if (isLoading) return <div className="text-center py-20">Carregando...</div>;
-  if (isError) return <div className="text-center text-red-500">Erro ao carregar personagens.</div>;
+  if (isError) return <div className="text-center text-red-500">Erro ao carregar locais.</div>;
+  if (!data) return null;
 
   const totalPages = data.info.pages;
 
@@ -22,19 +43,24 @@ export default function Page() {
 
       <ScrollArea className="max-h-[480px] overflow-y-auto rounded-md border mb-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center p-4">
-          {data.results.map((personagem: any) => (
+          {data.results.map((local: Local) => (
             <CardLocal
-              key={personagem.id}
-              id={personagem.id}
-              name={personagem.name}
-              type={personagem.type}
-              dimension={personagem.dimension}
+              key={local.id}
+              id={local.id}
+              name={local.name}
+              type={local.type}
+              dimension={local.dimension}
             />
           ))}
         </div>
       </ScrollArea>
 
-      <Paginacao page={page} setPage={setPage} totalPages={totalPages} hasNextPage={data.info.next} />
+      <Paginacao
+        page={page}
+        setPage={setPage}
+        totalPages={totalPages}
+        hasNextPage={data.info.next}
+      />
     </div>
   );
 }

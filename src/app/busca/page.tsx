@@ -1,12 +1,32 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useBusca } from "@/lib/api/hooks/useBusca";
 import { ScrollArea } from "@/ui/shadcn/components/scroll-area";
 import Paginacao from "@/ui/components/pagination/paginacao";
 import CardPersonagem from "@/ui/components/cards/cardPersonagem";
 import CardEpisodio from "@/ui/components/cards/cardEpisodio";
 import CardLocal from "@/ui/components/cards/cardLocal";
+
+interface Personagem {
+  id: number;
+  name: string;
+  image: string;
+}
+
+interface Episodio {
+  id: number;
+  name: string;
+  episode: string;
+  air_date: string;
+}
+
+interface Local {
+  id: number;
+  name: string;
+  type: string;
+  dimension: string;
+}
 
 export default function Page() {
   const [tipo, setTipo] = useState("character");
@@ -17,6 +37,22 @@ export default function Page() {
   const [endpoint, setEndpoint] = useState("");
 
   const { data, isLoading, isError } = useBusca(endpoint);
+
+  const construirUrl = useCallback(
+    (pagina: number) => {
+      const params = new URLSearchParams();
+      params.append("name", termo.trim());
+      params.append("page", pagina.toString());
+
+      if (tipo === "character") {
+        if (status) params.append("status", status);
+        if (gender) params.append("gender", gender);
+      }
+
+      return `/${tipo}/?${params.toString()}`;
+    },
+    [termo, tipo, status, gender]
+  );
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -30,20 +66,7 @@ export default function Page() {
     if (!termo.trim()) return;
     const novaUrl = construirUrl(page);
     setEndpoint(novaUrl);
-  }, [page]);
-
-  function construirUrl(pagina: number) {
-    const params = new URLSearchParams();
-    params.append("name", termo.trim());
-    params.append("page", pagina.toString());
-
-    if (tipo === "character") {
-      if (status) params.append("status", status);
-      if (gender) params.append("gender", gender);
-    }
-
-    return `/${tipo}/?${params.toString()}`;
-  }
+  }, [page, termo, construirUrl]);
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
@@ -119,7 +142,7 @@ export default function Page() {
           <ScrollArea className="max-h-[480px] overflow-y-auto rounded-md border mb-8">
             <ul className="flex flex-col items-center space-y-2">
               {tipo === "character" &&
-                data.results.map((personagem: any) => (
+                data.results.map((personagem: Personagem) => (
                   <CardPersonagem
                     key={personagem.id}
                     id={personagem.id}
@@ -129,7 +152,7 @@ export default function Page() {
                 ))}
 
               {tipo === "episode" &&
-                data.results.map((episodio: any) => (
+                data.results.map((episodio: Episodio) => (
                   <CardEpisodio
                     key={episodio.id}
                     id={episodio.id}
@@ -140,7 +163,7 @@ export default function Page() {
                 ))}
 
               {tipo === "location" &&
-                data.results.map((local: any) => (
+                data.results.map((local: Local) => (
                   <CardLocal
                     key={local.id}
                     id={local.id}

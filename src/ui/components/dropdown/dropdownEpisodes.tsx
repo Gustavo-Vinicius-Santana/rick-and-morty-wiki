@@ -8,9 +8,17 @@ import { useState } from "react";
 
 import { ScrollArea } from "@/ui/shadcn/components/scroll-area";
 
+interface Episodio {
+  id: number;
+  name: string;
+  episode: string;
+  air_date: string;
+  // Adicione outros campos explicitamente aqui, se precisar
+}
+
 type Props = {
   temporada: string;
-  episodios: any[];
+  episodios: Episodio[];
 };
 
 export default function DropdownEpisodes({ temporada, episodios }: Props) {
@@ -36,7 +44,7 @@ export default function DropdownEpisodes({ temporada, episodios }: Props) {
       <CollapsibleContent>
         <ScrollArea className="max-h-[400px] overflow-y-auto px-6 pb-6 pt-2">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {episodios.map((episodio: any) => (
+            {episodios.map((episodio: Episodio) => (
               <CardEpisodio
                 key={episodio.id}
                 id={episodio.id}

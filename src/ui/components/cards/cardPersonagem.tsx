@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useModalPersonagemStore } from "@/lib/stores/modalStore";
 
 type props = {

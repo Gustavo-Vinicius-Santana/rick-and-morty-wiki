@@ -3,16 +3,25 @@
 import { useListAllEpisodios } from "@/lib/api/hooks/useEpisodios";
 import DropdownEpisodes from "@/ui/components/dropdown/dropdownEpisodes";
 
+interface Episodio {
+  id: number;
+  name: string;
+  episode: string;    // Ex: "S01E05"
+  air_date: string;
+}
+
 export default function Page() {
   const { data, isLoading, isError } = useListAllEpisodios();
 
-  if (isLoading) return <div className="text-center py-10">Carregando...</div>;
-  if (isError) return <div className="text-center py-10 text-red-500">Erro ao carregar os episódios.</div>;
+  if (isLoading)
+    return <div className="text-center py-10">Carregando...</div>;
+  if (isError)
+    return <div className="text-center py-10 text-red-500">Erro ao carregar os episódios.</div>;
 
-  // Organiza os episódios por temporada com base no prefixo "Sxx" do campo episode
-  const episodiosPorTemporada: { [temporada: string]: any[] } = {};
+  // Tipando como Record<string, Episodio[]>
+  const episodiosPorTemporada: Record<string, Episodio[]> = {};
 
-  data?.forEach((episodio: any) => {
+  data?.forEach((episodio: Episodio) => {
     const match = episodio.episode.match(/(S\d{2})E\d{2}/);
     const temporada = match ? match[1] : "Outros";
 
@@ -23,7 +32,7 @@ export default function Page() {
     episodiosPorTemporada[temporada].push(episodio);
   });
 
-  // Converte para array e ordena pela temporada
+  // Ordena temporadas pelo número (ex: "S01", "S02", etc)
   const temporadasOrdenadas = Object.entries(episodiosPorTemporada).sort(
     ([a], [b]) => Number(a.slice(1)) - Number(b.slice(1))
   );
