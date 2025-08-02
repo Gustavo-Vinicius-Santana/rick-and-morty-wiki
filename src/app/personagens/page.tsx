@@ -21,7 +21,7 @@ export default function Page() {
       <ScrollArea className="max-h-[480px] overflow-y-auto rounded-md border mb-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center p-4">
           {data.results.map((personagem: any) => (
-            <CardPersonagem key={personagem.id} image={personagem.image} name={personagem.name} />
+            <CardPersonagem key={personagem.id} id={personagem.id} image={personagem.image} name={personagem.name} />
           ))}
         </div>
       </ScrollArea>

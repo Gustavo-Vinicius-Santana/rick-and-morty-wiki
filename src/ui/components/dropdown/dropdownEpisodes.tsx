@@ -39,6 +39,7 @@ export default function DropdownEpisodes({ temporada, episodios }: Props) {
             {episodios.map((episodio: any) => (
               <CardEpisodio
                 key={episodio.id}
+                id={episodio.id}
                 name={episodio.name}
                 episode={episodio.episode}
                 air_date={episodio.air_date}

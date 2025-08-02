@@ -22,3 +22,8 @@ export async function getAllEpisodes() {
 
   return allEpisodes;
 }
+
+export async function getEpisode(id: number) {
+    const response = await API.get(`/episode/${id}`);
+    return response.data;
+}

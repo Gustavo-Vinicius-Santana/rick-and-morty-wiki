@@ -122,6 +122,7 @@ export default function Page() {
                 data.results.map((personagem: any) => (
                   <CardPersonagem
                     key={personagem.id}
+                    id={personagem.id}
                     image={personagem.image}
                     name={personagem.name}
                   />
@@ -131,6 +132,7 @@ export default function Page() {
                 data.results.map((episodio: any) => (
                   <CardEpisodio
                     key={episodio.id}
+                    id={episodio.id}
                     name={episodio.name}
                     episode={episodio.episode}
                     air_date={episodio.air_date}
@@ -141,6 +143,7 @@ export default function Page() {
                 data.results.map((local: any) => (
                   <CardLocal
                     key={local.id}
+                    id={local.id}
                     name={local.name}
                     type={local.type}
                     dimension={local.dimension}
