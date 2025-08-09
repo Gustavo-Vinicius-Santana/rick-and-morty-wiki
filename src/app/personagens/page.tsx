@@ -9,6 +9,11 @@ interface Personagem {
   id: number;
   name: string;
   image: string;
+  status: string;
+  specie: string;
+  location: {
+    name: string;
+  };
   // Adicione outros campos explicitamente aqui, se precisar
 }
 
@@ -35,7 +40,7 @@ export default function Page() {
   const totalPages = data.info.pages;
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-10">
+    <div className="h-screen max-w-6xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">Personagens</h1>
 
       <ScrollArea className="max-h-[480px] overflow-y-auto rounded-md border mb-8">
@@ -46,6 +51,9 @@ export default function Page() {
               id={personagem.id}
               image={personagem.image}
               name={personagem.name}
+              status={personagem.status}
+              especie={personagem.specie}
+              location={personagem.location.name}
             />
           ))}
         </div>

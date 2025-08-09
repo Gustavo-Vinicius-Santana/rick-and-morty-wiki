@@ -54,14 +54,6 @@ export default function Page() {
     [termo, tipo, status, gender]
   );
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!termo.trim()) return;
-    setPage(1);
-    const novaUrl = construirUrl(1);
-    setEndpoint(novaUrl);
-  }
-
   useEffect(() => {
     if (!termo.trim()) return;
     const novaUrl = construirUrl(page);
@@ -69,10 +61,11 @@ export default function Page() {
   }, [page, termo, construirUrl]);
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
+    <div className="h-screen max-w-2xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-center mb-8">Busca</h1>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 mb-8">
+      {/* Alterei de <form> para <div> e removi handleSubmit */}
+      <div className="flex flex-col gap-4 mb-8">
         <div className="flex flex-col md:flex-row gap-4">
           <select
             value={tipo}
@@ -98,12 +91,7 @@ export default function Page() {
             className="flex-1 px-4 py-2 border rounded-2xl"
           />
 
-          <button
-            type="submit"
-            className="px-6 py-2 bg-white text-black border rounded-2xl hover:bg-gray-100 transition"
-          >
-            Buscar
-          </button>
+          {/* Botão de buscar removido */}
         </div>
 
         {tipo === "character" && (
@@ -132,7 +120,7 @@ export default function Page() {
             </select>
           </div>
         )}
-      </form>
+      </div>
 
       {isLoading && <div>Carregando...</div>}
       {isError && <div>Erro ao carregar dados.</div>}
