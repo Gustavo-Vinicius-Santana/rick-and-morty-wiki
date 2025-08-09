@@ -36,7 +36,7 @@ export default function Page() {
   const totalPages = data.info.pages;
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-10">
+    <div className="h-screen max-w-6xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
         Locais
       </h1>
