@@ -9,6 +9,11 @@ interface Personagem {
   id: number;
   name: string;
   image: string;
+  status: string;
+  specie: string;
+  location: {
+    name: string;
+  };
   // Adicione outros campos explicitamente aqui, se precisar
 }
 
@@ -46,6 +51,9 @@ export default function Page() {
               id={personagem.id}
               image={personagem.image}
               name={personagem.name}
+              status={personagem.status}
+              especie={personagem.specie}
+              location={personagem.location.name}
             />
           ))}
         </div>
