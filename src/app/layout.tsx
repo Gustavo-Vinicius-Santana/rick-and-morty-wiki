@@ -6,6 +6,7 @@ import Header from "@/ui/components/header/header";
 import ModalEpisodio from "@/ui/components/modals/modalEpisodio";
 import ModalLocal from "@/ui/components/modals/modalLocal";
 import ModalPersonagem from "@/ui/components/modals/modalPersonagem";
+import Footer from "@/ui/components/footer/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,9 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable}`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Header />
         <QueryProvider>
           {children}
@@ -39,6 +38,8 @@ export default function RootLayout({
           <ModalEpisodio />
           <ModalLocal />
           <ModalPersonagem />
+
+          <Footer />
         </QueryProvider>
       </body>
     </html>
